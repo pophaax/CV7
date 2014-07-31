@@ -111,17 +111,17 @@ float CV7::getAverageValue(vector<float> v)
 	return averageValue;
 }
 
-float CV7::getWindDirection()
+float CV7::getDirection()
 {
 	return getAverageValue(m_windDirection);
 }
 
-float CV7::getWindSpeed()
+float CV7::getSpeed()
 {
 	return getAverageValue(m_windSpeed);
 }
 
-float CV7::getWindTemperature()
+float CV7::getTemperature()
 {
 	return getAverageValue(m_windTemperature);
 }
