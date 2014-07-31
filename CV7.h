@@ -36,17 +36,17 @@ class CV7 {
 		/*
 			Returns an average wind direction value, depending on how many values that is in vector.
 		*/
-		float getWindDirection();
+		float getDirection();
 		
 		/*
 			Returns an average wind speed value, depending on how many values that is in vector.
 		*/
-		float getWindSpeed();
+		float getSpeed();
 		
 		/*
 			Returns an average wind temperature value, depending on how many values that is in vector.
 		*/
-		float getWindTemperature();
+		float getTemperature();
 
 	private:
 
