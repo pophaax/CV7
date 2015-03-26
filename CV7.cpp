@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <wiringSerial.h>
+#include <iostream>
 
 
 CV7::CV7() {
@@ -110,18 +111,49 @@ float CV7::getAverageValue(vector<float> v)
 	float averageValue = sum/v.size();
 	return averageValue;
 }
+float CV7::getMiddleValue(vector<float> v) {
+	if(v.empty()) {
+		return 0;
+	}
+	unsigned int middle = (int)v.size()/2;
+	if (v.size() % 2 == 1) {
+		return v.at(middle);
+	}
+	else {
+		if (v.size() > middle + 1) {
+			return (v.at(middle) + v.at(middle + 1)) / 2;
+		}
+		else {
+			return v.at(middle);
+		}
+	}
+}
 
-float CV7::getDirection()
+float CV7::getMeanDirection()
 {
 	return getAverageValue(m_windDirection);
 }
 
-float CV7::getSpeed()
+float CV7::getMeanSpeed()
 {
 	return getAverageValue(m_windSpeed);
 }
 
-float CV7::getTemperature()
+float CV7::getMeanTemperature()
 {
 	return getAverageValue(m_windTemperature);
 }
+
+float CV7::getMedianDirection() {
+	return getMiddleValue(m_windDirection);
+}
+
+float CV7::getMedianSpeed() {
+	return getMiddleValue(m_windSpeed);
+}
+
+float CV7::getMedianTemperature() {
+	return getMiddleValue(m_windTemperature);
+}
+
+

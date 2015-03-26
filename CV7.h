@@ -36,17 +36,34 @@ class CV7 {
 		/*
 			Returns an average wind direction value, depending on how many values that is in vector.
 		*/
-		float getDirection();
+		float getMeanDirection();
 		
 		/*
 			Returns an average wind speed value, depending on how many values that is in vector.
 		*/
-		float getSpeed();
+		float getMeanSpeed();
 		
 		/*
 			Returns an average wind temperature value, depending on how many values that is in vector.
 		*/
-		float getTemperature();
+		float getMeanTemperature();
+
+		/*
+		Returns the middle wind direction value, depending on how many values that is in vector.
+		*/
+		float getMedianDirection();
+
+		/*
+		Returns the middle wind speed value, depending on how many values that is in vector.
+		*/
+		float getMedianSpeed();
+
+		/*
+		Returns the middle wind temperature value, depending on how many values that is in vector.
+		*/
+		float getMedianTemperature();
+
+
 
 	private:
 
@@ -62,7 +79,14 @@ class CV7 {
 			This is called from the public getWind...() methods.
 			Returns an average windData value of all values in the vector.
 		*/
+
 		float getAverageValue(vector<float> v);
+		/*
+			This is called from the public getWind...() methods.
+			Returns an middle windData value of all values in the vector.
+		 */
+		float getMiddleValue(vector<float> v);
+
 
 };
 
