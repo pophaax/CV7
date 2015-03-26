@@ -22,3 +22,7 @@ $(FILE) : $(SOURCES) $(HEADERS)
 
 example : $(SOURCES) $(HEADERS) example.cpp
 	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) -o example
+
+clean :
+	rm -f $(FILE)
+	rm -f example
