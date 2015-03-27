@@ -26,12 +26,14 @@ int main()
 		} catch(const char* exception) {
 			cout << exception << endl;
 		}
-		wd_a = sensor.getMeanDirection();
-		ws_a = sensor.getMeanSpeed();
-		wt_a = sensor.getMeanTemperature();
-		wd_b = sensor.getMedianDirection();
-		ws_b = sensor.getMedianSpeed();
-		wt_b = sensor.getMedianTemperature();
+		sensor.setUseAverage(true);
+		wd_a = sensor.getDirection();
+		ws_a = sensor.getSpeed();
+		wt_a = sensor.getTemperature();
+		sensor.setUseAverage(false);
+		wd_b = sensor.getDirection();
+		ws_b = sensor.getSpeed();
+		wt_b = sensor.getTemperature();
 		
 		cout 	<< "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: " << wt_a << endl
 				<< "Median Angle	: " << wd_b << " Speed: " << ws_b << " Temp: " << wt_b << endl;
