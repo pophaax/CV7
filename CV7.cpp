@@ -8,6 +8,7 @@
 
 CV7::CV7() {
 		m_bufferSize = 30;
+		m_useAverage = true;
 }
 
 CV7::~CV7() 
@@ -98,20 +99,6 @@ void CV7::refreshData()
 	}
 }
 
-float CV7::getAverageValue(vector<float> v)
-{
-	if(v.empty()) {
-		return 0;
-	}
-	
-	float sum = 0;
-	for(unsigned int i = 0; i < v.size(); i++) {
-		sum += v.at(i);
-	}
-	float averageValue = sum/v.size();
-	return averageValue;
-}
-
 bool CV7::isUseAverage() {
 	return m_useAverage;
 }
@@ -120,51 +107,33 @@ void CV7::setUseAverage(bool useAverage) {
 	m_useAverage = useAverage;
 }
 
-float CV7::getMiddleValue(vector<float> v) {
-	if(v.empty()) {
-		return 0;
-	}
-	unsigned int middle = (int)v.size()/2;
-	if (v.size() % 2 == 1) {
-		return v.at(middle);
-	}
-	else {
-		if (v.size() > middle + 1) {
-			return (v.at(middle) + v.at(middle + 1)) / 2;
-		}
-		else {
-			return v.at(middle);
-		}
-	}
-}
-
 float CV7::getDirection()
 {
 	if (m_useAverage) {
-		return getAverageValue(m_windDirection);
+		return UtilityLibrary::getAverageValue(&m_windDirection);
 	}
 	else {
-		return getMiddleValue(m_windDirection);
+		return UtilityLibrary::getMiddleValue(&m_windDirection);
 	}
 }
 
 float CV7::getSpeed()
 {
 	if (m_useAverage) {
-		return getAverageValue(m_windSpeed);
+		return UtilityLibrary::getAverageValue(&m_windSpeed);
 	}
 	else {
-		return getMiddleValue(m_windSpeed);
+		return UtilityLibrary::getMiddleValue(&m_windSpeed);
 	}
 }
 
 float CV7::getTemperature()
 {
 	if (m_useAverage) {
-		return getAverageValue(m_windTemperature);
+			return UtilityLibrary::getAverageValue(&m_windTemperature);
 	}
 	else {
-		return getMiddleValue(m_windTemperature);
+		return UtilityLibrary::getMiddleValue(&m_windTemperature);
 	}
 }
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "UtilityLibrary.h"
 
 using namespace std;
 
@@ -54,7 +55,7 @@ class CV7 {
 	private:
 
 		int m_fd;
-		bool m_useAverage = true;
+		bool m_useAverage;
 
 		unsigned int m_bufferSize;
 		
