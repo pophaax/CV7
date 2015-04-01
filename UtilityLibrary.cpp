@@ -5,6 +5,7 @@
  *      Author: sailbot
  */
 #include <vector>
+#include <map>
 #include <iostream>
 #include "UtilityLibrary.h"
 
@@ -38,4 +39,41 @@ float UtilityLibrary::getMiddleValue(vector<float> *v) {
 			return v->at(middle);
 		}
 	}
+}
+
+map<string,float> UtilityLibrary::parseString(char* buffer) {
+	float windDirection;
+	float windSpeed;
+	float windTemperature;
+	const int IIMWV = 0;
+	const int WIXDR = 1;
+	bool updated[] = { false, false };
+
+	char* split = strtok(buffer, "$,");
+
+	while (split != NULL) {
+		if (strcmp(split, "IIMWV") == 0) {
+			split = strtok(NULL, "$,");
+			windDirection = atof(split);
+			split = strtok(NULL, "$,");
+			split = strtok(NULL, "$,");
+			windSpeed = atof(split);
+			updated[IIMWV] = true;
+		} else if (strcmp(split, "WIXDR") == 0) {
+			split = strtok(NULL, "$,");
+			split = strtok(NULL, "$,");
+			windTemperature = atof(split);
+			updated[WIXDR] = true;
+		}
+
+		if (updated[IIMWV] && updated[WIXDR]) {
+			break;
+		}
+		split = strtok(NULL, "$,");
+	}
+	map<string,float> result;
+	result.insert(make_pair("windDirection", windDirection));
+	result.insert(make_pair("windSpeed",windSpeed) );
+	result.insert(make_pair("windTemperature",windTemperature) );
+	return result;
 }

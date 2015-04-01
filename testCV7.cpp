@@ -31,6 +31,15 @@ TEST_CASE("CV7Test")
 		}
 		REQUIRE(refresh_OK);
 	}
+	SECTION("Test UtilLibrary parseString")
+	{
+		char testString[] = "$WIXDR,C,025.0,C,,*55$PLCJ,5DFF,5400,2E,4443,5041$PLCJE82B8,6BA0,2900,2162,80,$IIMWV,314.0,R,000.2,N,A*39$WIXDR,C,025.0,C,,*55$PLCJ,5DFE,54FF,2E,4443,5150$PLCJE82B8,6BA0,2900,2162,80,$IIMWV,314.0,R,000.2,N,A*39$WIXDR,C,025.0,C,,*55$PLCJ,5﻿";
+		map<string,float> result = UtilityLibrary::parseString(testString);
+		cout<<"windspeed: "<<result.find("windSpeed")->second<<endl;
+		REQUIRE(result.find("windDirection")->second == 314);
+		REQUIRE(result.find("windSpeed")->second == 0.2f);
+		REQUIRE(result.find("windTemperature")->second == 25);
+	}
 	SECTION("Test UtilLibrary average")
 	{
 		bool average_OK = false;

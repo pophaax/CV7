@@ -41,10 +41,6 @@ unsigned int CV7::getBufferSize()
 
 void CV7::refreshData()
 {
-	float windDirection;
-	float windSpeed;
-	float windTemperature;
-
 	const int NON_BREAKING_SPACE = 255;
 	const int BUFF_SIZE = 256;
 	char buffer[BUFF_SIZE];
@@ -61,36 +57,10 @@ void CV7::refreshData()
 		
 		index++;
 	}
-	
-	const int IIMWV = 0;
-	const int WIXDR = 1;
-	bool updated[] = {false,false};
-	
-	char* split = strtok(buffer,"$,");
-	while(split != NULL) {
-		if(strcmp(split, "IIMWV") == 0) {
-			split = strtok(NULL, "$,");
-			windDirection = atof(split);
-			split = strtok(NULL, "$,");
-			split = strtok(NULL, "$,");
-			windSpeed = atof(split);
-			updated[IIMWV] = true;
-		} else if(strcmp(split, "WIXDR") == 0) {
-			split = strtok(NULL, "$,");
-			split = strtok(NULL, "$,");
-			windTemperature = atof(split);
-			updated[WIXDR] = true;
-		}
-
-		if(updated[IIMWV] && updated[WIXDR]) {
-			break;
-		}
-		split = strtok(NULL, "$,");
-	}
-
-	m_windDirection.push_back(windDirection);
-	m_windSpeed.push_back(windSpeed);
-	m_windTemperature.push_back(windTemperature);
+	map<string,float> result = UtilityLibrary::parseString(buffer);
+	m_windDirection.push_back(result.find("windDirection")->second);
+	m_windSpeed.push_back(result.find("windSpeed")->second);
+	m_windTemperature.push_back(result.find("windTemperature")->second);
 
 	while(m_windDirection.size() > m_bufferSize) {
 		m_windDirection.erase(m_windDirection.begin());
