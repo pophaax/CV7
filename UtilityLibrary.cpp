@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "UtilityLibrary.h"
 
+<<<<<<< HEAD
 using namespace std;
 
 vector<float> UtilityLibrary::fixAngles(vector<float> v){
@@ -18,6 +19,12 @@ vector<float> UtilityLibrary::fixAngles(vector<float> v){
 		if (f < 90 || f > 270) {
 			counter++;
 		}
+=======
+float UtilityLibrary::getMeanValue(std::vector<float> *v)
+{
+	if(v->empty()) {
+		return 0;
+>>>>>>> branch 'master' of https://github.com/pophaax/CV7
 	}
 
 	if (counter > (v.size()/2)) {
@@ -50,7 +57,7 @@ float UtilityLibrary::getMeanValue(vector<float> v)
 	return averageValue;
 }
 
-float UtilityLibrary::getMedianValue(vector<float> v) {
+float UtilityLibrary::getMedianValue(std::vector<float> v) {
 	if(v.empty()) {
 		return 0;
 	}
@@ -75,7 +82,7 @@ float UtilityLibrary::getMedianValue(vector<float> v) {
 	return middleValue;
 }
 
-map<string,float> UtilityLibrary::parseString(char* buffer) {
+std::map<std::string,float> UtilityLibrary::parseString(char* buffer) {
 	float windDirection;
 	float windSpeed;
 	float windTemperature;
@@ -105,9 +112,9 @@ map<string,float> UtilityLibrary::parseString(char* buffer) {
 		}
 		split = strtok(NULL, "$,");
 	}
-	map<string,float> result;
-	result.insert(make_pair("windDirection", windDirection));
-	result.insert(make_pair("windSpeed",windSpeed) );
-	result.insert(make_pair("windTemperature",windTemperature) );
+	std::map<std::string,float> result;
+	result.insert(std::make_pair("windDirection", windDirection));
+	result.insert(std::make_pair("windSpeed",windSpeed) );
+	result.insert(std::make_pair("windTemperature",windTemperature) );
 	return result;
 }

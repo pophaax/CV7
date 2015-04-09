@@ -2,7 +2,7 @@
 #include "../catch.hpp"
 #include "CV7.h"
 
-
+using namespace std;
 TEST_CASE("CV7Test")
 {
 	SECTION("Test CV7 refresh function")

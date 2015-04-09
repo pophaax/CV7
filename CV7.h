@@ -6,8 +6,6 @@
 #include <map>
 #include "UtilityLibrary.h"
 
-using namespace std;
-
 class CV7 {
 	
 	public:
@@ -18,7 +16,7 @@ class CV7 {
 		/*
 			Loads the CV7 windsensor.
 		*/
-		void loadConfig(string portName, int baudRate);
+		void loadConfig(std::string portName, int baudRate);
 
 		/*
 			Sets vector sizes. Must be greater than 0 and default value is 30.
@@ -59,9 +57,9 @@ class CV7 {
 
 		unsigned int m_bufferSize;
 		
-		vector<float> m_windDirection;
-		vector<float> m_windSpeed;
-		vector<float> m_windTemperature;
+		std::vector<float> m_windDirection;
+		std::vector<float> m_windSpeed;
+		std::vector<float> m_windTemperature;
 };
 
 #endif

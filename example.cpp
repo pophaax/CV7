@@ -4,7 +4,7 @@
 
 int main()
 {
-	string portName = "/dev/ttyAMA0";
+	std::string portName = "/dev/ttyAMA0";
 	int baudRate = 4800;
 	unsigned int bufferSize = 10; 
 
@@ -13,7 +13,7 @@ int main()
 	try {
 		sensor.loadConfig(portName, baudRate);
 	} catch(const char* exception) {
-		cout << exception << endl;
+		std::cout << exception << std::endl;
 	}
 
 	sensor.setBufferSize(bufferSize); //Optional. Default: 30
@@ -24,7 +24,7 @@ int main()
 		try {
 			sensor.refreshData();
 		} catch(const char* exception) {
-			cout << exception << endl;
+			std::cout << exception << std::endl;
 		}
 		sensor.setUseMean(true);
 		wd_a = sensor.getDirection();
@@ -35,8 +35,8 @@ int main()
 		ws_b = sensor.getSpeed();
 		wt_b = sensor.getTemperature();
 		
-		cout 	<< "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: " << wt_a << endl
-				<< "Median Angle	: " << wd_b << " Speed: " << ws_b << " Temp: " << wt_b << endl;
+		std::cout 	<< "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: " << wt_a << std::endl
+				<< "Median Angle	: " << wd_b << " Speed: " << ws_b << " Temp: " << wt_b << std::endl;
 	}
 
 	return 0;
