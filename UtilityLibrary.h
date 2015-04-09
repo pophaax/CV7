@@ -11,12 +11,12 @@
 #include <map>
 #include <string.h>
 #include <stdlib.h>
-using namespace std;
 class UtilityLibrary {
 public:
-	static float getMeanValue(vector<float> *v);
-	static float getMedianValue(vector<float> v);
-	static map<string,float> parseString(char* buffer);
+	static std::vector<float> fixAngles(std::vector<float> v);
+	static float getMeanValue(std::vector<float> v);
+	static float getMedianValue(std::vector<float> v);
+	static std::map<std::string,float> parseString(char* buffer);
 };
 
 #endif /* CV7_UTILITYLIBRARY_H_ */

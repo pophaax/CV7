@@ -10,17 +10,43 @@
 #include <algorithm>
 #include "UtilityLibrary.h"
 
-float UtilityLibrary::getMeanValue(vector<float> *v)
-{
-	if(v->empty()) {
-		return 0;
+using namespace std;
+
+vector<float> UtilityLibrary::fixAngles(vector<float> v){
+	unsigned int counter = 0;
+	for (float f : v) {
+		if (f < 90 || f > 270) {
+			counter++;
+		}
 	}
 
-	float sum = 0;
-	for(unsigned int i = 0; i < v->size(); i++) {
-		sum += v->at(i);
+	if (counter > (v.size()/2)) {
+		vector<float> newV(v);
+		for (float& f : newV) {
+			if (f > 180 && f < 360) {
+				f -= 360;
+			}
+		}
+		return newV;
 	}
-	float averageValue = sum/v->size();
+	return v;
+}
+
+float UtilityLibrary::getMeanValue(vector<float> v)
+{
+	if(v.empty()) {
+		return 0;
+	}
+	vector<float> fixedV = UtilityLibrary::fixAngles(v);
+
+	float sum = 0;
+	for(unsigned int i = 0; i < fixedV.size(); i++) {
+		sum += fixedV.at(i);
+	}
+	float averageValue = sum/fixedV.size();
+	if(averageValue < 0 ){
+		averageValue+=360;
+	}
 	return averageValue;
 }
 
@@ -28,19 +54,25 @@ float UtilityLibrary::getMedianValue(vector<float> v) {
 	if(v.empty()) {
 		return 0;
 	}
-	sort(v.begin(), v.begin() + v.size());
-	unsigned int middle = (int) v.size()/2;
-	if (v.size() % 2 == 1) {
-		return v.at(middle);
+	vector<float> fixedV = UtilityLibrary::fixAngles(v);
+	sort(fixedV.begin(), fixedV.begin() + fixedV.size());
+	unsigned int middle = (int) fixedV.size()/2;
+	float middleValue = 0;
+	if (fixedV.size() % 2 == 1) {
+		middleValue = fixedV.at(middle);
 	}
 	else {
-		if (v.size() > middle) {
-			return (v.at(middle-1) + v.at(middle)) / 2;
+		if (fixedV.size() > middle) {
+			middleValue = (fixedV.at(middle-1) + fixedV.at(middle)) / 2;
 		}
 		else {
-			return v.at(middle);
+			middleValue = fixedV.at(middle);
 		}
 	}
+	if(middleValue < 0 ){
+		middleValue+=360;
+	}
+	return middleValue;
 }
 
 map<string,float> UtilityLibrary::parseString(char* buffer) {

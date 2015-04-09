@@ -39,60 +39,79 @@ TEST_CASE("CV7Test")
 		REQUIRE(result.find("windSpeed")->second == 0.2f);
 		REQUIRE(result.find("windTemperature")->second == 25);
 	}
-	SECTION("Test UtilLibrary average")
+	SECTION("Test UtilLibrary mean")
 	{
-		bool average_OK = false;
 		float f[] = {1.0,2.0,3.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float average = UtilityLibrary::getMeanValue(&v);
+		float average = UtilityLibrary::getMeanValue(v);
 		REQUIRE(average == 2);
 	}
-	SECTION("Test UtilLibrary middle even")
+	SECTION("Test UtilLibrary median even")
 	{
-		bool middle_OK = false;
 		float f[] = {1.0, 2.0, 20.0, 0.0, 5.0, 5.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
 		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 3.5);
 	}
-	SECTION("Test UtilLibrary middle odd")
+	SECTION("Test UtilLibrary median odd")
 	{
-		bool middle_OK = false;
 		float f[] = {1.0, 2.0, 20.0, 5.0, 5.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
 		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 5);
 	}
-	SECTION("Test UtilLibrary average one number")
+	SECTION("Test UtilLibrary mean one number")
 	{
-		bool average_OK = false;
 		float f[] = {2.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float average = UtilityLibrary::getMeanValue(&v);
+		float average = UtilityLibrary::getMeanValue(v);
 		REQUIRE(average == 2);
 	}
-	SECTION("Test UtilLibrary middle even")
+	SECTION("Test UtilLibrary median even")
 	{
-		bool middle_OK = false;
 		float f[] = {5.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
 		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 5);
 	}
-	SECTION("Test UtilLibrary average empty vector")
+	SECTION("Test UtilLibrary mean empty vector")
 	{
-		bool average_OK = false;
-		float f[] = {};
-		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float average = UtilityLibrary::getMeanValue(&v);
+		vector<float> v;
+		float average = UtilityLibrary::getMeanValue(v);
 		REQUIRE(average == 0);
 	}
-	SECTION("Test UtilLibrary middle empty vector")
+	SECTION("Test UtilLibrary median empty vector")
 	{
-		bool middle_OK = false;
-		float f[] = {};
+		vector<float> v;
+		float middle = UtilityLibrary::getMedianValue(v);
+		REQUIRE(middle == 0);
+	}
+	SECTION("Test UtilLibrary mean")
+	{
+		float f[] = {80, 280};
+		vector<float> v (f, f + sizeof(f) / sizeof(float) );
+		float average = UtilityLibrary::getMeanValue(v);
+		REQUIRE(average == 0);
+	}
+	SECTION("Test UtilLibrary median even")
+	{
+		float f[] = {80, 280};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
 		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 0);
+	}
+	SECTION("Test UtilLibrary mean")
+	{
+		float f[] = {355, 357, 359, 1, 3};
+		vector<float> v (f, f + sizeof(f) / sizeof(float) );
+		float average = UtilityLibrary::getMeanValue(v);
+		REQUIRE(average == 359);
+	}
+	SECTION("Test UtilLibrary median even")
+	{
+		float f[] = {355, 357, 359, 1, 3 };
+		vector<float> v (f, f + sizeof(f) / sizeof(float) );
+		float middle = UtilityLibrary::getMedianValue(v);
+		REQUIRE(middle == 359);
 	}
 }

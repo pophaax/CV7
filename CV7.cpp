@@ -80,7 +80,7 @@ void CV7::setUseMean(bool useMean) {
 float CV7::getDirection()
 {
 	if (m_useMean) {
-		return UtilityLibrary::getMeanValue(&m_windDirection);
+		return UtilityLibrary::getMeanValue(m_windDirection);
 	}
 	else {
 		return UtilityLibrary::getMedianValue(m_windDirection);
@@ -90,7 +90,7 @@ float CV7::getDirection()
 float CV7::getSpeed()
 {
 	if (m_useMean) {
-		return UtilityLibrary::getMeanValue(&m_windSpeed);
+		return UtilityLibrary::getMeanValue(m_windSpeed);
 	}
 	else {
 		return UtilityLibrary::getMedianValue(m_windSpeed);
@@ -100,7 +100,7 @@ float CV7::getSpeed()
 float CV7::getTemperature()
 {
 	if (m_useMean) {
-			return UtilityLibrary::getMeanValue(&m_windTemperature);
+			return UtilityLibrary::getMeanValue(m_windTemperature);
 	}
 	else {
 		return UtilityLibrary::getMedianValue(m_windTemperature);
