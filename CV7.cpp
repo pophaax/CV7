@@ -5,7 +5,7 @@
 #include <wiringSerial.h>
 #include <iostream>
 
-
+using namespace std;
 CV7::CV7() {
 		m_bufferSize = 30;
 		m_useMean = true;
@@ -18,7 +18,7 @@ CV7::~CV7()
 	}
 }
 
-void CV7::loadConfig(std::string portName, int baudRate)
+void CV7::loadConfig(string portName, int baudRate)
 {	
 	if((m_fd = serialOpen(portName.c_str(), baudRate)) < 0) {
 		throw "CV7::openPort: Unable to connect";
@@ -57,7 +57,7 @@ void CV7::refreshData()
 		
 		index++;
 	}
-	std::map<std::string,float> result = UtilityLibrary::parseString(buffer);
+	map<std::string,float> result = UtilityLibrary::parseString(buffer);
 	m_windDirection.push_back(result.find("windDirection")->second);
 	m_windSpeed.push_back(result.find("windSpeed")->second);
 	m_windTemperature.push_back(result.find("windTemperature")->second);

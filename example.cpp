@@ -1,10 +1,10 @@
 #include <iostream>
 #include "CV7.h"
 
-
+using namespace std;
 int main()
 {
-	std::string portName = "/dev/ttyAMA0";
+	string portName = "/dev/ttyAMA0";
 	int baudRate = 4800;
 	unsigned int bufferSize = 10; 
 
@@ -13,7 +13,7 @@ int main()
 	try {
 		sensor.loadConfig(portName, baudRate);
 	} catch(const char* exception) {
-		std::cout << exception << std::endl;
+		cout << exception << endl;
 	}
 
 	sensor.setBufferSize(bufferSize); //Optional. Default: 30
@@ -24,7 +24,7 @@ int main()
 		try {
 			sensor.refreshData();
 		} catch(const char* exception) {
-			std::cout << exception << std::endl;
+			cout << exception << endl;
 		}
 		sensor.setUseMean(true);
 		wd_a = sensor.getDirection();
@@ -35,8 +35,8 @@ int main()
 		ws_b = sensor.getSpeed();
 		wt_b = sensor.getTemperature();
 		
-		std::cout 	<< "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: " << wt_a << std::endl
-				<< "Median Angle	: " << wd_b << " Speed: " << ws_b << " Temp: " << wt_b << std::endl;
+		cout 	<< "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: " << wt_a << endl
+				<< "Median Angle	: " << wd_b << " Speed: " << ws_b << " Temp: " << wt_b << endl;
 	}
 
 	return 0;
