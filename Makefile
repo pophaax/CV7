@@ -8,7 +8,7 @@
 #######################################################
 
 CC = g++
-FLAGS = -std=c++14  -Wall -pedantic -Werror 
+FLAGS = -Wall -pedantic -Werror -std=c++14
 LIBS = -lpthread -lwiringPi -lrt
 
 SOURCES_CV7 = CV7.cpp
@@ -33,9 +33,27 @@ $(FILE_UTIL) : $(SOURCES_UTIL) $(HEADERS_UTIL)
 
 example : $(SOURCES) $(HEADERS) example.cpp
 	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) -o example
+	
 test : $(SOURCES) $(HEADERS) ../catch.hpp testCV7.cpp
-	$(CC) $(SOURCES) testCV7.cpp $(FLAGS) $(LIBS) -o test
+	$(CC) $(SOURCES) testCV7.cpp $(LIBS) -o test 
+
+metatest : $(SOURCES) $(HEADERS) ../catch.hpp testCV7.cpp
+	$(CC) $(SOURCES) testCV7.cpp -fprofile-arcs -ftest-coverage $(LIBS) -o metatest 
 
 clean :
 	rm -f $(FILES)
 	rm -f example
+	rm -f test
+	rm -f metatest
+	rm -f *.gcda
+	rm -f *.gcno
+
+metalog :
+	make metatest
+	./metatest
+	gcov -r CV7.cpp
+	grep -wE "(#####)" CV7.cpp.gcov > metatestlog.txt
+	rm -f *.gcov
+	make clean
+	sed -i '1s/^/Codelines below not tested by test*.cpp\n/' metatestlog.txt
+
