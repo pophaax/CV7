@@ -10,7 +10,7 @@
 #include <algorithm>
 #include "UtilityLibrary.h"
 
-float UtilityLibrary::getMeanValue(vector<float> *v)
+float UtilityLibrary::getMeanValue(std::vector<float> *v)
 {
 	if(v->empty()) {
 		return 0;
@@ -24,7 +24,7 @@ float UtilityLibrary::getMeanValue(vector<float> *v)
 	return averageValue;
 }
 
-float UtilityLibrary::getMedianValue(vector<float> v) {
+float UtilityLibrary::getMedianValue(std::vector<float> v) {
 	if(v.empty()) {
 		return 0;
 	}
@@ -43,7 +43,7 @@ float UtilityLibrary::getMedianValue(vector<float> v) {
 	}
 }
 
-map<string,float> UtilityLibrary::parseString(char* buffer) {
+std::map<std::string,float> UtilityLibrary::parseString(char* buffer) {
 	float windDirection;
 	float windSpeed;
 	float windTemperature;
@@ -73,9 +73,9 @@ map<string,float> UtilityLibrary::parseString(char* buffer) {
 		}
 		split = strtok(NULL, "$,");
 	}
-	map<string,float> result;
-	result.insert(make_pair("windDirection", windDirection));
-	result.insert(make_pair("windSpeed",windSpeed) );
-	result.insert(make_pair("windTemperature",windTemperature) );
+	std::map<std::string,float> result;
+	result.insert(std::make_pair("windDirection", windDirection));
+	result.insert(std::make_pair("windSpeed",windSpeed) );
+	result.insert(std::make_pair("windTemperature",windTemperature) );
 	return result;
 }
