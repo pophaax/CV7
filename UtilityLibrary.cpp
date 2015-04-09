@@ -10,7 +10,6 @@
 #include <algorithm>
 #include "UtilityLibrary.h"
 
-<<<<<<< HEAD
 using namespace std;
 
 vector<float> UtilityLibrary::fixAngles(vector<float> v){
@@ -19,14 +18,7 @@ vector<float> UtilityLibrary::fixAngles(vector<float> v){
 		if (f < 90 || f > 270) {
 			counter++;
 		}
-=======
-float UtilityLibrary::getMeanValue(std::vector<float> *v)
-{
-	if(v->empty()) {
-		return 0;
->>>>>>> branch 'master' of https://github.com/pophaax/CV7
 	}
-
 	if (counter > (v.size()/2)) {
 		vector<float> newV(v);
 		for (float& f : newV) {
