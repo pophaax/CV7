@@ -50,32 +50,18 @@ class CV7 {
 		*/
 		float getTemperature();
 
-		bool isUseAverage();
-		void setUseAverage(bool useAverage);
+		bool isUseMean();
+		void setUseMean(bool useMean);
 
 	private:
-
+		bool m_useMean;
 		int m_fd;
-		bool m_useAverage;
 
 		unsigned int m_bufferSize;
 		
 		vector<float> m_windDirection;
 		vector<float> m_windSpeed;
 		vector<float> m_windTemperature;
-
-		/*
-			This is called from the public getWind...() methods.
-			Returns an average windData value of all values in the vector.
-		*/
-
-		float getAverageValue(vector<float> v);
-		/*
-			This is called from the public getWind...() methods.
-			Returns an middle windData value of all values in the vector.
-		 */
-		float getMiddleValue(vector<float> v);
-
 };
 
 #endif

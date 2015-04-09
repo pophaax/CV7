@@ -44,7 +44,7 @@ TEST_CASE("CV7Test")
 		bool average_OK = false;
 		float f[] = {1.0,2.0,3.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float average = UtilityLibrary::getAverageValue(&v);
+		float average = UtilityLibrary::getMeanValue(&v);
 		REQUIRE(average == 2);
 	}
 	SECTION("Test UtilLibrary middle even")
@@ -52,7 +52,7 @@ TEST_CASE("CV7Test")
 		bool middle_OK = false;
 		float f[] = {1.0, 2.0, 20.0, 0.0, 5.0, 5.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float middle = UtilityLibrary::getMiddleValue(v);
+		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 3.5);
 	}
 	SECTION("Test UtilLibrary middle odd")
@@ -60,7 +60,7 @@ TEST_CASE("CV7Test")
 		bool middle_OK = false;
 		float f[] = {1.0, 2.0, 20.0, 5.0, 5.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float middle = UtilityLibrary::getMiddleValue(v);
+		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 5);
 	}
 	SECTION("Test UtilLibrary average one number")
@@ -68,7 +68,7 @@ TEST_CASE("CV7Test")
 		bool average_OK = false;
 		float f[] = {2.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float average = UtilityLibrary::getAverageValue(&v);
+		float average = UtilityLibrary::getMeanValue(&v);
 		REQUIRE(average == 2);
 	}
 	SECTION("Test UtilLibrary middle even")
@@ -76,7 +76,7 @@ TEST_CASE("CV7Test")
 		bool middle_OK = false;
 		float f[] = {5.0};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float middle = UtilityLibrary::getMiddleValue(v);
+		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 5);
 	}
 	SECTION("Test UtilLibrary average empty vector")
@@ -84,7 +84,7 @@ TEST_CASE("CV7Test")
 		bool average_OK = false;
 		float f[] = {};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float average = UtilityLibrary::getAverageValue(&v);
+		float average = UtilityLibrary::getMeanValue(&v);
 		REQUIRE(average == 0);
 	}
 	SECTION("Test UtilLibrary middle empty vector")
@@ -92,7 +92,7 @@ TEST_CASE("CV7Test")
 		bool middle_OK = false;
 		float f[] = {};
 		vector<float> v (f, f + sizeof(f) / sizeof(float) );
-		float middle = UtilityLibrary::getMiddleValue(v);
+		float middle = UtilityLibrary::getMedianValue(v);
 		REQUIRE(middle == 0);
 	}
 }

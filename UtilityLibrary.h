@@ -14,8 +14,8 @@
 using namespace std;
 class UtilityLibrary {
 public:
-	static float getAverageValue(vector<float> *v);
-	static float getMiddleValue(vector<float> v);
+	static float getMeanValue(vector<float> *v);
+	static float getMedianValue(vector<float> v);
 	static map<string,float> parseString(char* buffer);
 };
 

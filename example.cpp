@@ -26,11 +26,11 @@ int main()
 		} catch(const char* exception) {
 			cout << exception << endl;
 		}
-		sensor.setUseAverage(true);
+		sensor.setUseMean(true);
 		wd_a = sensor.getDirection();
 		ws_a = sensor.getSpeed();
 		wt_a = sensor.getTemperature();
-		sensor.setUseAverage(false);
+		sensor.setUseMean(false);
 		wd_b = sensor.getDirection();
 		ws_b = sensor.getSpeed();
 		wt_b = sensor.getTemperature();

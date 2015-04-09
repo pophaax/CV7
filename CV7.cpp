@@ -8,7 +8,7 @@
 
 CV7::CV7() {
 		m_bufferSize = 30;
-		m_useAverage = true;
+		m_useMean = true;
 }
 
 CV7::~CV7() 
@@ -69,41 +69,41 @@ void CV7::refreshData()
 	}
 }
 
-bool CV7::isUseAverage() {
-	return m_useAverage;
+bool CV7::isUseMean() {
+	return m_useMean;
 }
 
-void CV7::setUseAverage(bool useAverage) {
-	m_useAverage = useAverage;
+void CV7::setUseMean(bool useMean) {
+	m_useMean = useMean;
 }
 
 float CV7::getDirection()
 {
-	if (m_useAverage) {
-		return UtilityLibrary::getAverageValue(&m_windDirection);
+	if (m_useMean) {
+		return UtilityLibrary::getMeanValue(&m_windDirection);
 	}
 	else {
-		return UtilityLibrary::getMiddleValue(m_windDirection);
+		return UtilityLibrary::getMedianValue(m_windDirection);
 	}
 }
 
 float CV7::getSpeed()
 {
-	if (m_useAverage) {
-		return UtilityLibrary::getAverageValue(&m_windSpeed);
+	if (m_useMean) {
+		return UtilityLibrary::getMeanValue(&m_windSpeed);
 	}
 	else {
-		return UtilityLibrary::getMiddleValue(m_windSpeed);
+		return UtilityLibrary::getMedianValue(m_windSpeed);
 	}
 }
 
 float CV7::getTemperature()
 {
-	if (m_useAverage) {
-			return UtilityLibrary::getAverageValue(&m_windTemperature);
+	if (m_useMean) {
+			return UtilityLibrary::getMeanValue(&m_windTemperature);
 	}
 	else {
-		return UtilityLibrary::getMiddleValue(m_windTemperature);
+		return UtilityLibrary::getMedianValue(m_windTemperature);
 	}
 }
 

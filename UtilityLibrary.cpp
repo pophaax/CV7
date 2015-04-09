@@ -10,7 +10,7 @@
 #include <algorithm>
 #include "UtilityLibrary.h"
 
-float UtilityLibrary::getAverageValue(vector<float> *v)
+float UtilityLibrary::getMeanValue(vector<float> *v)
 {
 	if(v->empty()) {
 		return 0;
@@ -24,7 +24,7 @@ float UtilityLibrary::getAverageValue(vector<float> *v)
 	return averageValue;
 }
 
-float UtilityLibrary::getMiddleValue(vector<float> v) {
+float UtilityLibrary::getMedianValue(vector<float> v) {
 	if(v.empty()) {
 		return 0;
 	}
