@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <algorithm>
 #include "UtilityLibrary.h"
 
 float UtilityLibrary::getAverageValue(vector<float> *v)
@@ -23,20 +24,21 @@ float UtilityLibrary::getAverageValue(vector<float> *v)
 	return averageValue;
 }
 
-float UtilityLibrary::getMiddleValue(vector<float> *v) {
-	if(v->empty()) {
+float UtilityLibrary::getMiddleValue(vector<float> v) {
+	if(v.empty()) {
 		return 0;
 	}
-	unsigned int middle = (int)v->size()/2;
-	if (v->size() % 2 == 1) {
-		return v->at(middle);
+	sort(v.begin(), v.begin() + v.size());
+	unsigned int middle = (int) v.size()/2;
+	if (v.size() % 2 == 1) {
+		return v.at(middle);
 	}
 	else {
-		if (v->size() > middle) {
-			return (v->at(middle-1) + v->at(middle)) / 2;
+		if (v.size() > middle) {
+			return (v.at(middle-1) + v.at(middle)) / 2;
 		}
 		else {
-			return v->at(middle);
+			return v.at(middle);
 		}
 	}
 }

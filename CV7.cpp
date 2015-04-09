@@ -83,7 +83,7 @@ float CV7::getDirection()
 		return UtilityLibrary::getAverageValue(&m_windDirection);
 	}
 	else {
-		return UtilityLibrary::getMiddleValue(&m_windDirection);
+		return UtilityLibrary::getMiddleValue(m_windDirection);
 	}
 }
 
@@ -93,7 +93,7 @@ float CV7::getSpeed()
 		return UtilityLibrary::getAverageValue(&m_windSpeed);
 	}
 	else {
-		return UtilityLibrary::getMiddleValue(&m_windSpeed);
+		return UtilityLibrary::getMiddleValue(m_windSpeed);
 	}
 }
 
@@ -103,7 +103,7 @@ float CV7::getTemperature()
 			return UtilityLibrary::getAverageValue(&m_windTemperature);
 	}
 	else {
-		return UtilityLibrary::getMiddleValue(&m_windTemperature);
+		return UtilityLibrary::getMiddleValue(m_windTemperature);
 	}
 }
 
