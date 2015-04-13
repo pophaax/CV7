@@ -22,6 +22,18 @@ class CV7 {
 			Sets vector sizes. Must be greater than 0 and default value is 30.
 		*/
 		void setBufferSize(unsigned int bufferSize);
+
+		/*
+			Sets frequenzy of signal updates and restarts the readings.
+		*/
+		void setBaudRate(unsigned int baudRate);
+
+
+		/*
+			Keeps track of the current portname (should never really change after start)
+		*/
+		void setPortName(std::string portName);
+		
 		
 		/*
 			Returns current bufferSize value set.
@@ -56,6 +68,8 @@ class CV7 {
 		int m_fd;
 
 		unsigned int m_bufferSize;
+		unsigned int m_baudRate;
+		std::string m_portName;
 		
 		std::vector<float> m_windDirection;
 		std::vector<float> m_windSpeed;

@@ -53,6 +53,8 @@ metalog :
 	./metatest
 	gcov -r CV7.cpp
 	grep -wE "(#####)" CV7.cpp.gcov > metatestlog.txt
+	gcov -r CV7.cpp >> metatestlog.txt
+	
 	rm -f *.gcov
 	make clean
 	sed -i '1s/^/Codelines below not tested by test*.cpp\n/' metatestlog.txt

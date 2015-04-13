@@ -9,6 +9,8 @@ using namespace std;
 CV7::CV7() {
 		m_bufferSize = 30;
 		m_useMean = true;
+		m_portName = "";
+		m_baudRate = 0;
 }
 
 CV7::~CV7() 
@@ -20,6 +22,10 @@ CV7::~CV7()
 
 void CV7::loadConfig(string portName, int baudRate)
 {	
+
+	
+	setPortName(portName);
+
 	if((m_fd = serialOpen(portName.c_str(), baudRate)) < 0) {
 		throw "CV7::openPort: Unable to connect";
 	}
@@ -27,11 +33,31 @@ void CV7::loadConfig(string portName, int baudRate)
 
 void CV7::setBufferSize(unsigned int bufferSize)
 {
-	if(bufferSize < 0)
+	if(bufferSize < 1)
 	{
 		throw "CV7::setBufferSize: bufferSize must be 1 or higher";
 	}
 	m_bufferSize = bufferSize;
+}
+
+void CV7::setBaudRate(unsigned int baudRate){
+
+	if(baudRate < 1)
+	{
+		throw "CV7::setBaudRate: baudRate must be 1 or higher";
+	}	
+	m_baudRate = baudRate;
+
+
+	loadConfig(m_portName, m_baudRate);
+
+
+}
+
+void CV7::setPortName(std::string portName){
+
+	m_portName = portName;
+
 }
 
 unsigned int CV7::getBufferSize()
