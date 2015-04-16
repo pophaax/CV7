@@ -8,8 +8,8 @@
 #######################################################
 
 CC = g++
-FLAGS = -Wall -pedantic -Werror -std=c++14
-LIBS = -lpthread -lwiringPi -lrt
+FLAGS = -Wall -pedantic -Werror -std=c++14 -DBOOST_LOG_DYN_LINK
+LIBS = -lpthread -lwiringPi -lrt -lboost_system -lboost_log -lboost_thread
 
 SOURCES_CV7 = CV7.cpp
 HEADERS_CV7 = CV7.h
