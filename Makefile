@@ -27,10 +27,10 @@ all : $(FILE_CV7) $(FILE_UTIL)
 
 $(FILE_CV7) : $(SOURCES_CV7) $(HEADERS_CV7)
 	$(CC) $(SOURCES_CV7) $(FLAGS) $(LIBS) -c -o $(FILE_CV7)
-	
+
 $(FILE_UTIL) : $(SOURCES_UTIL) $(HEADERS_UTIL)
 	$(CC) $(SOURCES_UTIL) $(FLAGS) $(LIBS) -c -o $(FILE_UTIL)
-
+	
 example : $(SOURCES) $(HEADERS) example.cpp
 	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) -o example
 	
