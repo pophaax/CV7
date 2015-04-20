@@ -80,13 +80,18 @@ void CV7::refreshData()
 		if(NON_BREAKING_SPACE == ((int)buffer[index])) {
 			throw "CV7::refreshData: Serial read timeout";
 		}
-		
 		index++;
 	}
-	map<std::string,float> result = UtilityLibrary::parseString(buffer);
-	m_windDirection.push_back(result.find("windDirection")->second);
-	m_windSpeed.push_back(result.find("windSpeed")->second);
-	m_windTemperature.push_back(result.find("windTemperature")->second);
+	try {
+		map<std::string,float> result = UtilityLibrary::parseString(buffer);
+		m_windDirection.push_back(result.find("windDirection")->second);
+		m_windSpeed.push_back(result.find("windSpeed")->second);
+		m_windTemperature.push_back(result.find("windTemperature")->second);
+	}
+	catch (const char* e) {
+		throw e;
+	}
+
 
 	while(m_windDirection.size() > m_bufferSize) {
 		m_windDirection.erase(m_windDirection.begin());

@@ -41,7 +41,7 @@ class CV7 {
 		unsigned int getBufferSize();
 		
 		/*
-			Gets a new reading from the sensor and adds them to the buffer vectors.
+			Gets a new reading from the sensor and adds them to the buffer vectors. Throws exception on error
 		*/
 		void refreshData();
 		

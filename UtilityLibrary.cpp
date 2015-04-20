@@ -75,9 +75,9 @@ float UtilityLibrary::getMedianValue(std::vector<float> v) {
 }
 
 std::map<std::string,float> UtilityLibrary::parseString(char* buffer) {
-	float windDirection;
-	float windSpeed;
-	float windTemperature;
+	float windDirection = 0;
+	float windSpeed = 0;
+	float windTemperature = 0;
 	const int IIMWV = 0;
 	const int WIXDR = 1;
 	bool updated[] = { false, false };
@@ -103,6 +103,9 @@ std::map<std::string,float> UtilityLibrary::parseString(char* buffer) {
 			break;
 		}
 		split = strtok(NULL, "$,");
+	}
+	if (updated[IIMWV] == false || updated[WIXDR] == false ) {
+		throw "UtilLibrary::parseString exception";
 	}
 	std::map<std::string,float> result;
 	result.insert(std::make_pair("windDirection", windDirection));
