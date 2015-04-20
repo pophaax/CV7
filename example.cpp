@@ -30,7 +30,10 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 	vector<map<string, double>> array;
 	int polling = 160;
 	cout<<"loading values. 1 value/"<<mSeconds<<" ms"<<endl;
+	int start = 0;
+	float time = 0;
 	while (polling--) {
+		start = clock();
 		try {
 			sensor.refreshData();
 			map<string, double> temp;
@@ -38,12 +41,17 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 			temp.insert(make_pair("speed", sensor.getSpeed()));
 			temp.insert(make_pair("temp", sensor.getTemperature()));
 			array.push_back(temp);
-			cout<<".";
+			//cout<<".";
 			usleep(mSeconds);
 		}
 		catch (const char* exception) {
 			cout << exception << endl;
 		}
+		time = (clock()-start) / CLOCKS_PER_SEC;
+		if (time < mSeconds ) {
+			usleep(mSeconds - time);
+		}
+
 	}
 	cout<<endl<<"loading done"<<endl;
 	return array;
