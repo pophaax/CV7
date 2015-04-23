@@ -27,35 +27,43 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 
 	sensor.setBufferSize(bufferSize); //Optional. Default: 30
 	sensor.setUseMean(mode);
-	vector<map<string, double>> array;
+	vector<map<string, double>> resultVector;
 	int polling = 160;
 	cout<<"loading values. 1 value/"<<mSeconds<<" ms"<<endl;
-	int start = 0;
+	int start = 0, sectionStart = 0;
 	float time = 0;
 	map<string, double> temp;
 	while (polling--) {
 		start = clock();
 		temp.clear();
 		try {
-			sensor.refreshData();
+			sectionStart = clock();
+			std::string data = sensor.refreshData();
+			BOOST_LOG_TRIVIAL(info) <<"poll "<<polling<<std::endl<< "refresh time :["<<((clock()-sectionStart) / CLOCKS_PER_SEC)*1000<<"] mSeconds";
+			sectionStart = clock();
+			sensor.parseData(data);
+			BOOST_LOG_TRIVIAL(info) << "parse time :["<<((clock()-sectionStart) / CLOCKS_PER_SEC)*1000<<"] mSeconds";
 			temp.insert(make_pair("direction", sensor.getDirection()));
 			temp.insert(make_pair("speed", sensor.getSpeed()));
 			temp.insert(make_pair("temp", sensor.getTemperature()));
-			array.push_back(temp);
+			resultVector.push_back(temp);
 			//cout<<".";
 			//usleep(mSeconds);
 		}
 		catch (const char* exception) {
+			BOOST_LOG_TRIVIAL(error) << exception;
 			cout << exception << endl;
 		}
 		time = ((clock()-start) / CLOCKS_PER_SEC)*1000;
 		if (time < mSeconds ) {
+			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<mSeconds-time<<"] mSeconds";
 			usleep(mSeconds - time);
 		}
+		BOOST_LOG_TRIVIAL(info) << "total poll loop time time :["<<((clock()-start) / CLOCKS_PER_SEC)*1000<<"] mSeconds";
 
 	}
 	cout<<endl<<"loading done"<<endl;
-	return array;
+	return resultVector;
 }
 string prettyString (int number, float sin, float cos){
 	string resultString = "no " + std::to_string(number);

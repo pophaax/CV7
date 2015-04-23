@@ -43,7 +43,14 @@ class CV7 {
 		/*
 			Gets a new reading from the sensor and adds them to the buffer vectors. Throws exception on error
 		*/
-		void refreshData();
+		std::string refreshData();
+
+		/*
+			parses the data from windsensor and puts values in vectors
+		*/
+		void parseData(std::string data);
+
+
 		
 		/*
 			Returns an average wind direction value, depending on how many values that is in vector.

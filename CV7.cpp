@@ -64,7 +64,7 @@ unsigned int CV7::getBufferSize()
 	return m_bufferSize;
 }
 
-void CV7::refreshData()
+std::string CV7::refreshData()
 {
 	const int NON_BREAKING_SPACE = 255;
 	const int BUFF_SIZE = 256;
@@ -83,8 +83,12 @@ void CV7::refreshData()
 		}
 		index++;
 	}
+	return buffer;
+}
+
+void CV7::parseData(std::string data) {
 	try {
-		map<std::string,float> result = UtilityLibrary::parseString(buffer);
+		map<std::string, float> result = UtilityLibrary::parseString(data.c_str());
 		m_windDirection.push_back(result.find("windDirection")->second);
 		m_windSpeed.push_back(result.find("windSpeed")->second);
 		m_windTemperature.push_back(result.find("windTemperature")->second);
@@ -92,18 +96,21 @@ void CV7::refreshData()
 	catch (const char* e) {
 		throw e;
 	}
-
-
-	while(m_windDirection.size() > m_bufferSize) {
+	while (m_windDirection.size() > m_bufferSize) {
 		m_windDirection.erase(m_windDirection.begin());
 		m_windSpeed.erase(m_windSpeed.begin());
 		m_windTemperature.erase(m_windTemperature.begin());
 	}
 }
 
+
+
+
+
 bool CV7::isUseMean() {
 	return m_useMean;
 }
+
 
 void CV7::setUseMean(bool useMean) {
 	m_useMean = useMean;

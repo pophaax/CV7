@@ -17,7 +17,7 @@ public:
 	static std::vector<float> fixAngles(std::vector<float> v);
 	static float getMeanValue(std::vector<float> v);
 	static float getMedianValue(std::vector<float> v);
-	static std::map<std::string,float> parseString(char* buffer);
+	static std::map<std::string,float> parseString(const char* buffer);
 };
 
 #endif /* CV7_UTILITYLIBRARY_H_ */
