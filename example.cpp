@@ -32,17 +32,18 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 	cout<<"loading values. 1 value/"<<mSeconds<<" ms"<<endl;
 	int start = 0;
 	float time = 0;
+	map<string, double> temp;
 	while (polling--) {
 		start = clock();
 		try {
 			sensor.refreshData();
-			map<string, double> temp;
+			temp.clear();
 			temp.insert(make_pair("direction", sensor.getDirection()));
 			temp.insert(make_pair("speed", sensor.getSpeed()));
 			temp.insert(make_pair("temp", sensor.getTemperature()));
 			array.push_back(temp);
 			//cout<<".";
-			usleep(mSeconds);
+			//usleep(mSeconds);
 		}
 		catch (const char* exception) {
 			cout << exception << endl;
