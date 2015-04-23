@@ -8,6 +8,7 @@
 #include <map>
 #include <iostream>
 #include <algorithm>
+#include <numeric>
 #include "UtilityLibrary.h"
 
 using namespace std;
@@ -37,16 +38,12 @@ float UtilityLibrary::getMeanValue(vector<float> v)
 		return 0;
 	}
 	vector<float> fixedV = UtilityLibrary::fixAngles(v);
-
-	float sum = 0;
-	for(unsigned int i = 0; i < fixedV.size(); i++) {
-		sum += fixedV.at(i);
+	double sum = std::accumulate(fixedV.begin(), fixedV.end(), 0.0);
+	double mean = sum / fixedV.size();
+	if(mean < 0 ){
+		mean+=360;
 	}
-	float averageValue = sum/fixedV.size();
-	if(averageValue < 0 ){
-		averageValue+=360;
-	}
-	return averageValue;
+	return mean;
 }
 
 float UtilityLibrary::getMedianValue(std::vector<float> v) {
