@@ -70,15 +70,16 @@ float UtilityLibrary::getMedianValue(std::vector<float> v) {
 	return middleValue;
 }
 
-std::map<std::string,float> UtilityLibrary::parseString(char* buffer) {
+std::map<std::string,float> UtilityLibrary::parseString(const char* buffer) {
 	float windDirection = 0;
 	float windSpeed = 0;
 	float windTemperature = 0;
 	const int IIMWV = 0;
 	const int WIXDR = 1;
 	bool updated[] = { false, false };
-
-	char* split = strtok(buffer, "$,");
+	char * writalbeBuff;
+	writalbeBuff = const_cast<char *>(buffer);
+	char* split = strtok(writalbeBuff, "$,");
 
 	while (split != NULL) {
 		if (strcmp(split, "IIMWV") == 0) {

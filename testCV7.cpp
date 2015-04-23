@@ -23,7 +23,8 @@ TEST_CASE("CV7Test")
 		bool refresh_OK = true;
 		while(polling--) {
 			try {
-				sensor.refreshData();
+				std::string data = sensor.refreshData();
+				sensor.parseData(data);
 			} catch(const char* e) {
 				string s = e;
 				if (s.compare("CV7::refreshData: Serial read timeout") == 0 ) {
