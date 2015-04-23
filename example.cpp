@@ -48,7 +48,7 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 		catch (const char* exception) {
 			cout << exception << endl;
 		}
-		time = (clock()-start) / CLOCKS_PER_SEC;
+		time = ((clock()-start) / CLOCKS_PER_SEC)*1000;
 		if (time < mSeconds ) {
 			usleep(mSeconds - time);
 		}
