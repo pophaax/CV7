@@ -78,7 +78,7 @@ void CV7::refreshData()
 		
 		if(NON_BREAKING_SPACE == ((int)buffer[index])) {
 			std::stringstream text;
-			text << "CV7::refreshData: Serial read timeout["<<buffer<<"]";
+			text << "CV7::refreshData: Serial read timeout";
 			throw text.str().c_str();
 		}
 		index++;
