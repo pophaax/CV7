@@ -66,8 +66,8 @@ unsigned int CV7::getBufferSize()
 
 void CV7::refreshData()
 {
-	const int NON_BREAKING_SPACE = 511;
-	const int BUFF_SIZE = 512;
+	const int NON_BREAKING_SPACE = 255;
+	const int BUFF_SIZE = 256;
 	char buffer[BUFF_SIZE];
 
 	int index = 0;
