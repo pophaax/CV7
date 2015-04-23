@@ -13,13 +13,12 @@
 
 using namespace std;
 
+bool IsOutOfRange (float f) {
+	return (f < 90 || f > 270);
+}
+
 vector<float> UtilityLibrary::fixAngles(vector<float> v){
-	unsigned int counter = 0;
-	for (float f : v) {
-		if (f < 90 || f > 270) {
-			counter++;
-		}
-	}
+	unsigned int counter =  count_if(v.begin(), v.end(), IsOutOfRange);
 	if (counter > (v.size()/2)) {
 		vector<float> newV(v);
 		for (float& f : newV) {
