@@ -11,6 +11,14 @@ CC = g++
 FLAGS = -Wall -pedantic -Werror -std=c++14 -DBOOST_LOG_DYN_LINK
 LIBS = -lpthread -lwiringPi -lrt -lboost_system -lboost_log -lboost_thread
 
+SOURCES_WIND = Windsensor.cpp
+HEADERS_WIND = Windsensor.h
+FILE_WIND = Windsensor.o
+
+SOURCES_MOCK = MockWindsensor.cpp
+HEADERS_MOCK = MockWindsensor.h
+FILE_MOCK = MockWindsensor.o
+
 SOURCES_CV7 = CV7.cpp
 HEADERS_CV7 = CV7.h
 FILE_CV7 = CV7.o
@@ -19,8 +27,8 @@ SOURCES_UTIL = UtilityLibrary.cpp
 HEADERS_UTIL = UtilityLibrary.h
 FILE_UTIL = UtilityLibrary.o
 
-SOURCES = $(SOURCES_CV7) $(SOURCES_UTIL)
-HEADERS = $(HEADERS_CV7) $(HEADERS_UTIL)
+SOURCES = $(SOURCES_CV7) $(SOURCES_UTIL) $(SOURCES_WIND) $(SOURCES_MOCK)
+HEADERS = $(HEADERS_CV7) $(HEADERS_UTIL) $(HEADERS_WIND) $(HEADERS_MOCK)
 FILES = $(FILE_CV7) $(FILE_UTIL)
 
 all : $(FILE_CV7) $(FILE_UTIL)
@@ -30,7 +38,13 @@ $(FILE_CV7) : $(SOURCES_CV7) $(HEADERS_CV7)
 
 $(FILE_UTIL) : $(SOURCES_UTIL) $(HEADERS_UTIL)
 	$(CC) $(SOURCES_UTIL) $(FLAGS) $(LIBS) -c -o $(FILE_UTIL)
+
+$(FILE_WIND) : $(SOURCES_WIND) $(HEADERS_WIND)
+	$(CC) $(SOURCES_WIND) $(FLAGS) $(LIBS) -c -o $(FILE_WIND)
 	
+$(FILE_MOCK) : $(SOURCES_MOCK) $(HEADERS_MOCK)
+	$(CC) $(SOURCES_MOCK) $(FLAGS) $(LIBS) -c -o $(FILE_MOCK)
+			
 example : $(SOURCES) $(HEADERS) example.cpp
 	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) -o example
 	
