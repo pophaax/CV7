@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <sstream>
 #include <wiringSerial.h>
 #include <iostream>
 
@@ -48,9 +49,7 @@ void CV7::setBaudRate(unsigned int baudRate){
 	}	
 	m_baudRate = baudRate;
 
-
 	loadConfig(m_portName, m_baudRate);
-
 
 }
 
@@ -78,7 +77,9 @@ void CV7::refreshData()
 		fflush(stdout);
 		
 		if(NON_BREAKING_SPACE == ((int)buffer[index])) {
-			throw "CV7::refreshData: Serial read timeout["+NON_BREAKING_SPACE+":"+((int)buffer[index])+"]";
+			std::stringstream text;
+			text << "CV7::refreshData: Serial read timeout["<<NON_BREAKING_SPACE<<":"<<((int)buffer[index])<<"]";
+			throw text.str().c_str();
 		}
 		index++;
 	}
