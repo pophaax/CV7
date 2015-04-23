@@ -67,8 +67,8 @@ unsigned int CV7::getBufferSize()
 
 void CV7::refreshData()
 {
-	const int NON_BREAKING_SPACE = 255;
-	const int BUFF_SIZE = 256;
+	const int NON_BREAKING_SPACE = 511;
+	const int BUFF_SIZE = 512;
 	char buffer[BUFF_SIZE];
 
 	int index = 0;
@@ -78,7 +78,7 @@ void CV7::refreshData()
 		fflush(stdout);
 		
 		if(NON_BREAKING_SPACE == ((int)buffer[index])) {
-			throw "CV7::refreshData: Serial read timeout";
+			throw "CV7::refreshData: Serial read timeout["+NON_BREAKING_SPACE+":"+((int)buffer[index])+"]";
 		}
 		index++;
 	}

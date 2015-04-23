@@ -35,9 +35,9 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 	map<string, double> temp;
 	while (polling--) {
 		start = clock();
+		temp.clear();
 		try {
 			sensor.refreshData();
-			temp.clear();
 			temp.insert(make_pair("direction", sensor.getDirection()));
 			temp.insert(make_pair("speed", sensor.getSpeed()));
 			temp.insert(make_pair("temp", sensor.getTemperature()));
