@@ -5,7 +5,6 @@
  *      Author: sailbot
  */
 
-#include "CV7.h"
 #include "MockWindsensor.h"
 
 void MockWindsensor::loadConfig(std::string portName, int baudRate){
