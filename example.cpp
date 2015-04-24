@@ -63,11 +63,16 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 			BOOST_LOG_TRIVIAL(error) << exception;
 			cout << exception << endl;
 		}
+		cout << "time"<< endl;
 		time = 1000* (clock()-start) / CLOCKS_PER_SEC;
+		cout << "time after: "<< time << endl;
 		if (time < mSeconds ) {
 			int sleepTime = (mSeconds - time * 1000);
+			cout << "after sleeptime: "<< sleepTime << endl;
 			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<sleepTime<<"] mSeconds.  current time: "<<time;
+			cout << "before thread_sleep: "<< endl;
 			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+			cout << "after thread_sleep: "<< endl;
 			BOOST_LOG_TRIVIAL(info) << "after sleep time: "<< 1000* (clock()-start) / CLOCKS_PER_SEC;
 		}
 		else {
