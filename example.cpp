@@ -29,7 +29,7 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 	sensor.setBufferSize(bufferSize); //Optional. Default: 30
 	sensor.setUseMean(mode);
 	vector<map<string, double>> resultVector;
-	int polling = 160;
+	int polling = 30;
 	cout<<"loading values. 1 value/"<<mSeconds<<" ms"<<endl;
 	std::atomic<double> start(0);
 	std::atomic<double> sectionStart(0);
@@ -42,7 +42,7 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 			sectionStart = clock();
 			std::string data = sensor.refreshData();
 			BOOST_LOG_TRIVIAL(info)
-					<<"###### poll "<<polling<<"######"<<std::endl
+					<<"poll "<<polling<<std::endl
 					<< "refresh time :["
 					<< 1000* (clock()-sectionStart) / CLOCKS_PER_SEC
 					<< "] mSeconds";
@@ -64,10 +64,11 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 		time = 1000* (clock()-start) / CLOCKS_PER_SEC;
 		if (time < mSeconds ) {
 			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<mSeconds-time<<"] mSeconds.  current time: "<<time;
-			usleep((mSeconds - time) * 1000);
+			usleep(1000 * (mSeconds - time));
+			BOOST_LOG_TRIVIAL(info) << "after sleep time: "<< 1000* (clock()-start) / CLOCKS_PER_SEC;
 		}
 		else {
-			BOOST_LOG_TRIVIAL(info) << "No sleep needed!!!.  current time: "<<time;
+			BOOST_LOG_TRIVIAL(info) << "No sleep needed!!  current time: "<<time;
 		}
 		BOOST_LOG_TRIVIAL(info)
 				<< "total poll loop time time :["
@@ -236,7 +237,8 @@ void runOldExample(){
 	BOOST_LOG_TRIVIAL(info)<< "Entering test loop, looping "<< polling<< "times" ;
 	while (polling--) {
 		try {
-			sensor.refreshData();
+			std::string t = sensor.refreshData();
+			sensor.parseData(t);
 		} catch (const char* exception) {
 			BOOST_LOG_TRIVIAL(error)<< "crash at refreshData : "<< exception;
 			cout << exception << endl;
