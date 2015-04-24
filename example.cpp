@@ -2,6 +2,7 @@
 #include <string>
 #include <math.h>
 #include <unistd.h>
+#include <atomic>
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
@@ -30,8 +31,9 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 	vector<map<string, double>> resultVector;
 	int polling = 160;
 	cout<<"loading values. 1 value/"<<mSeconds<<" ms"<<endl;
-	std::clock_t start = 0, sectionStart = 0;
-	float time = 0;
+	std::atomic<double> start(0);
+	std::atomic<double> sectionStart(0);
+	std::atomic<double> time(0);
 	map<string, double> temp;
 	while (polling--) {
 		start = clock();
@@ -39,15 +41,16 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 		try {
 			sectionStart = clock();
 			std::string data = sensor.refreshData();
-			BOOST_LOG_TRIVIAL(info) <<"poll "<<polling<<std::endl
+			BOOST_LOG_TRIVIAL(info)
+					<<"###### poll "<<polling<<"######"<<std::endl
 					<< "refresh time :["
-					<< ((clock()-sectionStart) / (CLOCKS_PER_SEC/1000))
+					<< 1000* (clock()-sectionStart) / CLOCKS_PER_SEC
 					<< "] mSeconds";
 			sectionStart = clock();
 			sensor.parseData(data);
 			BOOST_LOG_TRIVIAL(info)
 					<< "parse time :["
-					<< ((clock()-sectionStart) / (CLOCKS_PER_SEC/1000))
+					<< 1000* (clock()-sectionStart) / CLOCKS_PER_SEC
 					<< "] mSeconds";
 			temp.insert(make_pair("direction", sensor.getDirection()));
 			temp.insert(make_pair("speed", sensor.getSpeed()));
@@ -58,13 +61,17 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 			BOOST_LOG_TRIVIAL(error) << exception;
 			cout << exception << endl;
 		}
-		time = ((clock()-start) / (CLOCKS_PER_SEC/1000));
+		time = 1000* (clock()-start) / CLOCKS_PER_SEC;
 		if (time < mSeconds ) {
-			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<mSeconds-time<<"] mSeconds";
-			usleep(mSeconds - time);
+			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<mSeconds-time<<"] mSeconds.  current time: "<<time;
+			usleep((mSeconds - time) * 1000);
 		}
-		BOOST_LOG_TRIVIAL(info) << "total poll loop time time :["
-				<< ((clock()-start) / (CLOCKS_PER_SEC/1000))
+		else {
+			BOOST_LOG_TRIVIAL(info) << "No sleep needed!!!.  current time: "<<time;
+		}
+		BOOST_LOG_TRIVIAL(info)
+				<< "total poll loop time time :["
+				<< 1000* (clock()-start) / CLOCKS_PER_SEC
 				<<"] mSeconds";
 
 	}
