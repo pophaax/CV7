@@ -63,8 +63,9 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 		}
 		time = 1000* (clock()-start) / CLOCKS_PER_SEC;
 		if (time < mSeconds ) {
-			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<mSeconds-time<<"] mSeconds.  current time: "<<time;
-			usleep(1000 * (mSeconds - time));
+			int sleepTime = 1000 * (mSeconds - time);
+			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<sleepTime<<"] uSeconds.  current time: "<<time;
+			usleep(sleepTime);
 			BOOST_LOG_TRIVIAL(info) << "after sleep time: "<< 1000* (clock()-start) / CLOCKS_PER_SEC;
 		}
 		else {
