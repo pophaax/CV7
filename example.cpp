@@ -3,6 +3,8 @@
 #include <math.h>
 #include <unistd.h>
 #include <atomic>
+#include <chrono>
+#include <thread>
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/log/expressions.hpp>
@@ -64,8 +66,8 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 		time = 1000* (clock()-start) / CLOCKS_PER_SEC;
 		if (time < mSeconds ) {
 			int sleepTime = 1000 * (mSeconds - time);
-			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<sleepTime<<"] uSeconds.  current time: "<<time;
-			usleep(sleepTime);
+			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<sleepTime<<"] mSeconds.  current time: "<<time;
+			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
 			BOOST_LOG_TRIVIAL(info) << "after sleep time: "<< 1000* (clock()-start) / CLOCKS_PER_SEC;
 		}
 		else {
