@@ -146,5 +146,9 @@ float CV7::getTemperature()
 	}
 }
 
-
+void CV7::getModel(WindsensorModel *model) {
+	model->direction = getDirection();
+	model->speed = getSpeed();
+	model->temperature = getTemperature();
+}
 

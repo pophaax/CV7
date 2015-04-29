@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include "UtilityLibrary.h"
+#include "../models/WindsensorModel.h"
 
 class CV7 {
 	
@@ -69,6 +70,8 @@ class CV7 {
 
 		bool isUseMean();
 		void setUseMean(bool useMean);
+
+		void getModel(WindsensorModel *model);
 
 	private:
 		bool m_useMean;
