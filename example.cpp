@@ -5,14 +5,14 @@
 #include <atomic>
 #include <chrono>
 #include <thread>
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/utility/setup/file.hpp>
 #include "CV7.h"
+#include "../logger/Logger.h"
 
 
 using namespace std;
+
+	Logger logger;
+
 	/**
 	 *  mode 0 = mean, 1 = median
 	 */
@@ -44,42 +44,46 @@ vector<map<string, double>> getHZReadings(int mSeconds, bool mode) {
 		try {
 			sectionStart = clock();
 			std::string data = sensor.refreshData();
-			BOOST_LOG_TRIVIAL(info)
-					<<"poll "<<polling<<std::endl
-					<< "refresh time :["
-					<< 1000* ((clock()-sectionStart) / CLOCKS_PER_SEC)
-					<< "] mSeconds";
+			logger.info(std::string("poll ")
+					+ std::to_string(polling));
+			logger.info(std::string("refresh time :[ ")
+					+ std::to_string( 1000* ((clock()-sectionStart) / CLOCKS_PER_SEC))
+					+ std::string("] mSeconds"));
+
 			sectionStart = clock();
 			sensor.parseData(data);
-			BOOST_LOG_TRIVIAL(info)
-					<< "parse time :["
-					<< 1000* ((clock()-sectionStart) / CLOCKS_PER_SEC)
-					<< "] mSeconds";
+			logger.info(std::string( "parse time :[ ")
+					+ std::to_string(1000* ((clock()-sectionStart) / CLOCKS_PER_SEC))
+					+ std::string("] mSeconds"));
 			temp.insert(make_pair("direction", sensor.getDirection()));
 			temp.insert(make_pair("speed", sensor.getSpeed()));
 			temp.insert(make_pair("temp", sensor.getTemperature()));
 			resultVector.push_back(temp);
 		}
 		catch (const char* exception) {
-			BOOST_LOG_TRIVIAL(error) << exception;
+			logger.error(exception);
 		}
 		time = 1000* ((clock()-start) / CLOCKS_PER_SEC);
 		if (time < mSeconds ) {
 			sleepTime = mSeconds - time;
-			BOOST_LOG_TRIVIAL(info) << "sleep for :["<<sleepTime<<"] mSeconds.  current time: "<<time;
+			logger.info(std::string("sleep for :[ ")
+					+ std::to_string(1000* ((clock()-start) / CLOCKS_PER_SEC))
+					+ std::string( "] mSeconds.  current time: ")
+					+ std::to_string(time));
 			std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
-			BOOST_LOG_TRIVIAL(info) << "after sleep time: "<< 1000* ((clock()-start) / CLOCKS_PER_SEC);
+			logger.info(std::string("after sleep time: ")
+					+ std::to_string(1000* ((clock()-start) / CLOCKS_PER_SEC)));
 		}
 		else {
-			BOOST_LOG_TRIVIAL(info) << "No sleep needed!!  current time: "<<time;
+			logger.info(std::string( "No sleep needed!!  current time: ")
+					+ (std::to_string(time)));
 		}
-		BOOST_LOG_TRIVIAL(info)
-				<< "total poll loop time time :["
-				<< 1000* ((clock()-start) / CLOCKS_PER_SEC)
-				<<"] mSeconds";
+		logger.info(std::string("total poll loop time time :[")
+				+ std::to_string(1000* ((clock()-start) / CLOCKS_PER_SEC))
+				+ std::string( "] mSeconds"));
 
 	}
-	cout<<endl<<"loading done"<<endl;
+	cout<<"loading done"<<endl;
 	return resultVector;
 }
 string prettyString (int number, float sin, float cos){
@@ -150,41 +154,50 @@ string sinAll(vector<map<string, double>> values){
 
 	}
 	string resultString = "resultstring:\n";
-	BOOST_LOG_TRIVIAL(info) <<endl<<"resultstring:";
+	logger.info(std::string("resultstring : "));
 	for (string s : resultStringVector) {
-		resultString += s + "\n";
-		BOOST_LOG_TRIVIAL(info) << s;
+		resultString += s;
+		logger.info(std::string(s));
 	}
 	resultString += "fiveVector:\n";
-	BOOST_LOG_TRIVIAL(info) <<"fiveVector:";
+	logger.info(std::string("fiveVector : "));
 	int i = 0;
 	for (float f : resultFiveVector_s) {
 		resultString += prettyString(i, f, resultFiveVector_c.at(i));
-		BOOST_LOG_TRIVIAL(info)<< "no " << i<<"  sin: " << f <<"  cos: " << resultFiveVector_c.at(i);
+		logger.info( std::string("no ")	+ (std::to_string(i)
+			+ std::string("  sin: ") + std::to_string(f)
+			+ std::string("  cos: ") + std::to_string(resultFiveVector_c.at(i)))
+			);
 		i++;
 	}
 	resultString += "tenVector:\n";
-	BOOST_LOG_TRIVIAL(info) <<"tenVector:";
+	logger.info(std::string("tenVector : "));
 	i = 0;
 	for (float f : resultTenVector_s) {
 		resultString += prettyString(i, f, resultTenVector_c.at(i));
-		BOOST_LOG_TRIVIAL(info)<< "no " << i<<"  sin: " << f <<"  cos: " << resultTenVector_c.at(i);
+		logger.info( std::string("no ")	+ (std::to_string(i)
+			+ std::string("  sin: ") + std::to_string(f)
+			+ std::string("  cos: ") + std::to_string(resultTenVector_c.at(i))));
 		i++;
 	}
 	resultString += "twentyVector:\n";
-	BOOST_LOG_TRIVIAL(info) <<"twentyVector:" ;
+	logger.info(std::string("twentyVector : "));
 	i = 0;
 	for (float f : resultTwentyVector_s) {
 		resultString += prettyString(i, f, resultTwentyVector_c.at(i));
-		BOOST_LOG_TRIVIAL(info)<< "no " << i<<"  sin: " << f <<"  cos: " << resultTwentyVector_c.at(i);
+		logger.info( std::string("no ")	+ (std::to_string(i)
+			+ std::string("  sin: ") + std::to_string(f)
+			+ std::string("  cos: ") + std::to_string(resultTwentyVector_c.at(i))));
 		i++;
 	}
 	resultString += "fortyVector:\n";
-	BOOST_LOG_TRIVIAL(info) <<"fortyVector:";
+	logger.info(std::string("fortyVector : "));
 	i = 0;
 	for (float f : resultFortyVector_s) {
 		resultString += prettyString(i, f, resultFortyVector_c.at(i));
-		BOOST_LOG_TRIVIAL(info)<< "no " << i<<"  sin: " << f <<"  cos: " << resultFortyVector_c.at(i);
+		logger.info( std::string("no ")	+ (std::to_string(i)
+			+ std::string("  sin: ") + std::to_string(f)
+			+ std::string("  cos: ") + std::to_string(resultFortyVector_c.at(i))));
 		i++;
 	}
 	return resultString;
@@ -193,36 +206,7 @@ void runOldExample(){
 	string portName = "/dev/ttyAMA0";
 	int baudRate = 4800;
 	unsigned int bufferSize = 10;
-	bool inputOk = false;
-	int i;
-	while (inputOk == false) {
-		cout << "Please enter a baudrate (rec: 4800):" << endl;
-		cin >> i;
-		if (i <= 5000 && i >= 3000) {
-			cout << "Baudrate set to: " << i << endl;
-			baudRate = i;
-			inputOk = true;
-		} else {
-			cout << "Input not in acceptable range, try something else: "
-					<< endl;
-		}
-	}
-	inputOk = false;
-	while (inputOk == false) {
-		cout << "Please enter a buffersize (rec: 10):" << endl;
-		cin >> i;
-
-		if (i <= 50 && i >= 1) {
-			cout << "Buffersize set to " << i << endl;
-			bufferSize = i;
-			inputOk = true;
-		} else {
-			cout << "Input not in acceptable range, try something else: "
-					<< endl;
-		}
-
-	}
-	BOOST_LOG_TRIVIAL(info)<< "Running CV7 example:";
+	logger.info(std::string("Running CV7 example:"));
 	cout << "Running CV7 example: " << endl;
 
 	CV7 sensor;
@@ -230,20 +214,24 @@ void runOldExample(){
 	try {
 		sensor.loadConfig(portName, baudRate);
 	} catch (const char* exception) {
-		BOOST_LOG_TRIVIAL(error)<< "crash at sensor.loadConfif : "<< exception;
+		logger.error(std::string( "crash at sensor.loadConfif : ")
+			+ std::string( exception));
 		cout << exception << endl;
 	}
 	sensor.setBufferSize(bufferSize); //Optional. Default: 30
 
 	int polling = 50;
 	float wd_a, ws_a, wt_a, wd_b, ws_b, wt_b;
-	BOOST_LOG_TRIVIAL(info)<< "Entering test loop, looping "<< polling<< "times" ;
+	logger.info(std::string("Entering test loop, looping ")
+		+ std::to_string(polling)
+		+ std::string("times"));
 	while (polling--) {
 		try {
 			std::string t = sensor.refreshData();
 			sensor.parseData(t);
 		} catch (const char* exception) {
-			BOOST_LOG_TRIVIAL(error)<< "crash at refreshData : "<< exception;
+			logger.error( std::string("crash at refreshData : ")
+				+ std::string(exception));
 			cout << exception << endl;
 		}
 		sensor.setUseMean(true);
@@ -258,9 +246,12 @@ void runOldExample(){
 		cout << "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: "
 				<< wt_a << endl << "Median Angle	: " << wd_b << " Speed: "
 				<< ws_b << " Temp: " << wt_b << endl;
-		BOOST_LOG_TRIVIAL(info)<< "Mean Angle	: " << wd_a << " Speed: " << ws_a << " Temp: "
-				<< wt_a << endl << "Median Angle	: " << wd_b << " Speed: "
-				<< ws_b << " Temp: " << wt_b;
+		logger.info( std::string("Mean Angle	 : ") + std::to_string( wd_a)
+			+ std::string(" Speed: ") + std::to_string(ws_a)
+			+ std::string(" Temp: " + std::to_string(wt_a)));
+		logger.info( std::string("Median Angle : ") + std::to_string(wd_b)
+			+ std::string(" Speed: ") + std::to_string(ws_b)
+			+ std::string(" Temp: ") + std::to_string(wt_b));
 	}
 
 }
@@ -268,26 +259,33 @@ void runOldExample(){
 
 int main(int argc, char** argv)
 {
-	boost::log::add_file_log("sample.log");
-	boost::log::core::get()->set_filter(
-			boost::log::trivial::severity >= boost::log::trivial::info
-	);
+	if (!logger.init("CV7Example")) {
+		cout<<"error initing logger"<< endl;
+		return 0;
+	}
 
 	/**
 	 *  CV7 integration test
 	 */
-	int times = 1; // 100 for standard reading
-	BOOST_LOG_TRIVIAL(info)<< "reading info from windsensor with "<< 2000*times <<" freq";
-	vector<map<string, double>> values = getHZReadings(2000*times, false);
+	logger.info(std::string("reading info from windsensor with ") +
+			std::to_string(2000));
+	//		+ " freq");
+	vector<map<string, double>> values = getHZReadings(2000, false);
 	string log = sinAll(values);
-	BOOST_LOG_TRIVIAL(info)<< "reading info from windsensor with "<< 1000*times <<" freq";
-	values = getHZReadings(1000 * times, false);
+	logger.info(std::string("reading info from windsensor with ")
+			+ std::to_string(1000)
+			+ std::string(" freq"));
+	values = getHZReadings(1000 , false);
 	log = sinAll(values);
-	BOOST_LOG_TRIVIAL(info)<< "reading info from windsensor with "<< 500*times <<" freq";
-	values = getHZReadings(500 * times, false);
+	logger.info(std::string("reading info from windsensor with ")
+			+ std::to_string(500)
+			+ std::string(" freq"));
+	values = getHZReadings(500 , false);
 	log = sinAll(values);
-	BOOST_LOG_TRIVIAL(info)<< "reading info from windsensor with "<< 250*times <<" freq";
-	values = getHZReadings(250 * times, false);
+	logger.info(std::string("reading info from windsensor with ")
+			+ std::to_string(250)
+			+ std::string(" freq"));
+	values = getHZReadings(250 , false);
 	log = sinAll(values);
 
 	runOldExample();

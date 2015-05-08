@@ -27,6 +27,8 @@ SOURCES_UTIL = UtilityLibrary.cpp
 HEADERS_UTIL = UtilityLibrary.h
 FILE_UTIL = UtilityLibrary.o
 
+FILE_LOGGER = ../logger/Logger.o
+
 SOURCES = $(SOURCES_CV7) $(SOURCES_UTIL) $(SOURCES_WIND) $(SOURCES_MOCK)
 HEADERS = $(HEADERS_CV7) $(HEADERS_UTIL) $(HEADERS_WIND) $(HEADERS_MOCK)
 FILES = $(FILE_CV7) $(FILE_UTIL)
@@ -45,8 +47,8 @@ $(FILE_WIND) : $(SOURCES_WIND) $(HEADERS_WIND)
 $(FILE_MOCK) : $(SOURCES_MOCK) $(HEADERS_MOCK)
 	$(CC) $(SOURCES_MOCK) $(FLAGS) $(LIBS) -c -o $(FILE_MOCK)
 			
-example : $(SOURCES) $(HEADERS) example.cpp
-	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) -o example
+example : $(SOURCES) $(HEADERS) $(FILES) example.cpp
+	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) $(FILE_LOGGER) -o example
 	
 test : $(SOURCES) $(HEADERS) ../catch.hpp testCV7.cpp
 	$(CC) $(SOURCES) testCV7.cpp $(FLAGS) $(LIBS) -o test 
