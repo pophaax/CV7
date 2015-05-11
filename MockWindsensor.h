@@ -23,7 +23,7 @@ class MockWindsensor:public CV7 {
 
 		unsigned int getBufferSize();
 
-		void refreshData();
+		std::string refreshData();
 
 		float getDirection();
 

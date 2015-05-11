@@ -27,8 +27,8 @@ unsigned int MockWindsensor::getBufferSize() {
 	return 11;
 }
 
-void MockWindsensor::refreshData() {
-
+std::string MockWindsensor::refreshData() {
+	return "";
 }
 
 bool MockWindsensor::isUseMean() {
