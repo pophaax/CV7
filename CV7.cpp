@@ -94,7 +94,9 @@ void CV7::parseData(std::string data) {
 		m_windTemperature.push_back(result.find("windTemperature")->second);
 	}
 	catch (const char* e) {
-		throw e;
+		std::stringstream text;
+		text << "CV7::parseData() [" << e << "]";
+		throw text.str().c_str();
 	}
 	while (m_windDirection.size() > m_bufferSize) {
 		m_windDirection.erase(m_windDirection.begin());
