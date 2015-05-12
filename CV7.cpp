@@ -88,7 +88,9 @@ std::string CV7::refreshData()
 
 void CV7::parseData(std::string data) {
 	try {
+		printf("UtilityLibrary::parseString()\n");
 		map<std::string, float> result = UtilityLibrary::parseString(data.c_str());
+		printf("ok\n");
 		m_windDirection.push_back(result.find("windDirection")->second);
 		m_windSpeed.push_back(result.find("windSpeed")->second);
 		m_windTemperature.push_back(result.find("windTemperature")->second);
