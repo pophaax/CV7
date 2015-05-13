@@ -31,11 +31,7 @@ std::string MockWindsensor::refreshData() {
 	return "";
 }
 
-bool MockWindsensor::isUseMean() {
-	return true;
-}
-
-void MockWindsensor::setUseMean(bool useMean) {
+void MockWindsensor::parseData(std::string data) {
 
 }
 
@@ -51,5 +47,16 @@ float MockWindsensor::getTemperature() {
 	return 6.5;
 }
 
+bool MockWindsensor::isUseMean() {
+	return true;
+}
+
+void MockWindsensor::setUseMean(bool useMean) {
+
+}
+
+void MockWindsensor::getModel(WindsensorModel *model) {
+
+}
 
 
