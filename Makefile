@@ -50,10 +50,10 @@ $(FILE_MOCK) : $(SOURCES_MOCK) $(HEADERS_MOCK)
 example : $(SOURCES) $(HEADERS) $(FILES) example.cpp
 	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) $(FILE_LOGGER) -o example
 	
-test : $(SOURCES) $(HEADERS) ../catch.hpp testCV7.cpp
+test : $(SOURCES) $(HEADERS) $$SAILINGROBOTS_HOME/catch.hpp testCV7.cpp
 	$(CC) $(SOURCES) testCV7.cpp $(FLAGS) $(LIBS) -o test 
 
-metatest : $(SOURCES) $(HEADERS) ../catch.hpp testCV7.cpp
+metatest : $(SOURCES) $(HEADERS) $$SAILINGROBOTS_HOME/catch.hpp testCV7.cpp
 	$(CC) $(SOURCES) testCV7.cpp -fprofile-arcs -ftest-coverage $(FLAGS) $(LIBS) -o metatest 
 
 clean :
