@@ -8,7 +8,7 @@
 #ifndef CV7_WINDSENSOR_H_
 #define CV7_WINDSENSOR_H_
 
-#include "../models/WindsensorModel.h"
+#include "models/WindsensorModel.h"
 #include <string>
 
 class Windsensor{
