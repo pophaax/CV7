@@ -6,7 +6,7 @@
 #include <chrono>
 #include <thread>
 #include "CV7.h"
-#include "../logger/Logger.h"
+#include "logger/Logger.h"
 
 
 using namespace std;

@@ -9,7 +9,7 @@
 
 CC = g++
 FLAGS = -Wall -pedantic -Werror -std=c++14 -DBOOST_LOG_DYN_LINK
-LIBS = -lpthread -lwiringPi -lrt -lboost_system -lboost_log -lboost_thread
+LIBS = -lpthread -lwiringPi -lrt -I$(SAILINGROBOTS_HOME) -lboost_system -lboost_log -lboost_thread
 
 SOURCES_WIND = Windsensor.cpp
 HEADERS_WIND = Windsensor.h
@@ -70,4 +70,3 @@ metalog :
 	rm -f *.gcov
 	make clean
 	sed -i '1s/^/Codelines below not tested by test*.cpp\n/' metatestlog.txt
-

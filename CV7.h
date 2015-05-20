@@ -6,7 +6,7 @@
 #include <map>
 #include "Windsensor.h"
 #include "UtilityLibrary.h"
-#include "../models/WindsensorModel.h"
+#include "models/WindsensorModel.h"
 
 class CV7:public Windsensor {
 	
