@@ -27,7 +27,7 @@ SOURCES_UTIL = UtilityLibrary.cpp
 HEADERS_UTIL = UtilityLibrary.h
 FILE_UTIL = UtilityLibrary.o
 
-FILE_LOGGER = $$SAILINGROBOTS_HOME/logger/Logger.o
+FILE_LOGGER = $(SAILINGROBOTS_HOME)/logger/Logger.o
 
 SOURCES = $(SOURCES_WIND) $(SOURCES_CV7) $(SOURCES_MOCK) $(SOURCES_UTIL) 
 HEADERS = $(HEADERS_WIND) $(HEADERS_CV7) $(HEADERS_MOCK) $(HEADERS_UTIL) 
@@ -49,17 +49,13 @@ $(FILE_MOCK) : $(SOURCES_MOCK) $(HEADERS_MOCK)
 			
 example : $(SOURCES) $(HEADERS) $(FILES) example.cpp
 	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) $(FILE_LOGGER) -o example
-	
-test : $(SOURCES) $(HEADERS) $$SAILINGROBOTS_HOME/catch.hpp testCV7.cpp
-	$(CC) $(SOURCES) testCV7.cpp $(FLAGS) $(LIBS) -o test 
 
-metatest : $(SOURCES) $(HEADERS) $$SAILINGROBOTS_HOME/catch.hpp testCV7.cpp
-	$(CC) $(SOURCES) testCV7.cpp -fprofile-arcs -ftest-coverage $(FLAGS) $(LIBS) -o metatest 
+metatest : $(SOURCES) $(HEADERS) $(SAILINGROBOTS_HOME)/tests/catch.hpp $(SAILINGROBOTS_HOME)/tests/testsuite/testCV7.cpp
+	$(CC) $(SOURCES) $(SAILINGROBOTS_HOME)/tests/testsuite/testCV7.cpp -fprofile-arcs -ftest-coverage $(FLAGS) $(LIBS) -o metatest 
 
 clean :
 	rm -f $(FILES)
 	rm -f example
-	rm -f test
 	rm -f metatest
 	rm -f *.gcda
 	rm -f *.gcno
