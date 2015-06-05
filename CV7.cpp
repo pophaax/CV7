@@ -23,11 +23,11 @@ CV7::~CV7()
 
 void CV7::loadConfig(string portName, int baudRate)
 {	
-
-	
 	setPortName(portName);
+	
+	m_fd = serialOpen(portName.c_str(), baudRate);
 
-	if((m_fd = serialOpen(portName.c_str(), baudRate)) < 0) {
+	if(m_fd < 0) {
 		throw "CV7::openPort: Unable to connect";
 	}
 }
