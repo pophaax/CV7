@@ -46,27 +46,8 @@ $(FILE_WIND) : $(SOURCES_WIND) $(HEADERS_WIND)
 
 $(FILE_MOCK) : $(SOURCES_MOCK) $(HEADERS_MOCK)
 	$(CC) $(SOURCES_MOCK) $(FLAGS) $(LIBS) -c -o $(FILE_MOCK)
-			
-example : $(SOURCES) $(HEADERS) $(FILES) example.cpp
-	$(CC) $(SOURCES) example.cpp $(FLAGS) $(LIBS) $(FILE_LOGGER) -o example
-
-metatest : $(SOURCES) $(HEADERS) $(SAILINGROBOTS_HOME)/tests/catch.hpp $(SAILINGROBOTS_HOME)/tests/testsuite/testCV7.cpp
-	$(CC) $(SOURCES) $(SAILINGROBOTS_HOME)/tests/testsuite/testCV7.cpp -fprofile-arcs -ftest-coverage $(FLAGS) $(LIBS) -o metatest 
 
 clean :
 	rm -f $(FILES)
-	rm -f example
-	rm -f metatest
 	rm -f *.gcda
 	rm -f *.gcno
-
-metalog :
-	make metatest
-	./metatest
-	gcov -r CV7.cpp
-	grep -wE "(#####)" CV7.cpp.gcov > metatestlog.txt
-	gcov -r CV7.cpp >> metatestlog.txt
-	
-	rm -f *.gcov
-	make clean
-	sed -i '1s/^/Codelines below not tested by test*.cpp\n/' metatestlog.txt
