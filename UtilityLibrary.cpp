@@ -70,6 +70,52 @@ float UtilityLibrary::getMedianValue(std::vector<float> v) {
 	return middleValue;
 }
 
+float UtilityLibrary::mean(std::vector<float> values)
+{
+	float sum = 0;
+
+	for(std::vector<float>::iterator it = values.begin();
+		it != values.end(); ++it)
+	{
+		sum += *it;
+	}
+
+	return sum / values.size();
+}
+
+/*
+ * uses formula for calculating mean of angles
+ * https://en.wikipedia.org/wiki/Mean_of_circular_quantities
+ */
+float UtilityLibrary::meanOfAngles(std::vector<float> anglesInDegrees)
+{
+	std::vector<float> xx, yy;
+	float x, y;
+
+	// convert all angles to cartesian coordinates
+	for(std::vector<float>::iterator it = anglesInDegrees.begin();
+		it != anglesInDegrees.end(); ++it)
+	{
+		polarToCartesian(*it, x, y);
+		xx.push_back(x);
+		yy.push_back(y);
+	}
+
+	// use formula
+	float meanAngleRadians = atan2(mean(yy), mean(xx));
+	// atan2 produces results in the range (−π, π],
+	// which can be mapped to [0, 2π) by adding 2π to negative results
+	if (meanAngleRadians < 0) meanAngleRadians += 2*M_PI;
+	
+	return meanAngleRadians * 180/M_PI;
+}
+
+void UtilityLibrary::polarToCartesian(float degrees, float& x, float& y)
+{
+	x = cos(degrees * M_PI/180);
+	y = sin(degrees * M_PI/180);
+}
+
 std::map<std::string,float> UtilityLibrary::parseString(const char* buffer) {
 	float windDirection = 0;
 	float windSpeed = 0;
