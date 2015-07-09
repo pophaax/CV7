@@ -15,10 +15,7 @@
 class UtilityLibrary {
 public:
 	static std::vector<float> fixAngles(std::vector<float> v);
-	static float getMeanValue(std::vector<float> v);
 	static float getMedianValue(std::vector<float> v);
-
-	// new mean function without fixAngles
 	static float mean(std::vector<float> values);
 	static float meanOfAngles(std::vector<float> anglesInDegrees);
 	

@@ -6,7 +6,6 @@
 #include <wiringSerial.h>
 #include <iostream>
 
-using namespace std;
 CV7::CV7() {
 		m_bufferSize = 30;
 		m_useMean = true;
@@ -21,7 +20,7 @@ CV7::~CV7()
 	}
 }
 
-void CV7::loadConfig(string portName, int baudRate)
+void CV7::loadConfig(std::string portName, int baudRate)
 {	
 	setPortName(portName);
 	
@@ -89,7 +88,7 @@ std::string CV7::refreshData()
 void CV7::parseData(std::string data) {
 	if(data.size()==0) return;
 	try {
-		map<std::string, float> result = UtilityLibrary::parseString(data.c_str());
+		std::map<std::string, float> result = UtilityLibrary::parseString(data.c_str());
 		m_windDirection.push_back(result.find("windDirection")->second);
 		m_windSpeed.push_back(result.find("windSpeed")->second);
 		m_windTemperature.push_back(result.find("windTemperature")->second);
@@ -106,14 +105,9 @@ void CV7::parseData(std::string data) {
 	}
 }
 
-
-
-
-
 bool CV7::isUseMean() {
 	return m_useMean;
 }
-
 
 void CV7::setUseMean(bool useMean) {
 	m_useMean = useMean;
@@ -122,7 +116,7 @@ void CV7::setUseMean(bool useMean) {
 float CV7::getDirection()
 {
 	if (m_useMean) {
-		return UtilityLibrary::getMeanValue(m_windDirection);
+		return UtilityLibrary::meanOfAngles(m_windDirection);
 	}
 	else {
 		return UtilityLibrary::getMedianValue(m_windDirection);
@@ -132,7 +126,7 @@ float CV7::getDirection()
 float CV7::getSpeed()
 {
 	if (m_useMean) {
-		return UtilityLibrary::getMeanValue(m_windSpeed);
+		return UtilityLibrary::mean(m_windSpeed);
 	}
 	else {
 		return UtilityLibrary::getMedianValue(m_windSpeed);
@@ -142,7 +136,7 @@ float CV7::getSpeed()
 float CV7::getTemperature()
 {
 	if (m_useMean) {
-			return UtilityLibrary::getMeanValue(m_windTemperature);
+			return UtilityLibrary::mean(m_windTemperature);
 	}
 	else {
 		return UtilityLibrary::getMedianValue(m_windTemperature);
@@ -154,4 +148,3 @@ void CV7::getModel(WindsensorModel *model) {
 	model->speed = getSpeed();
 	model->temperature = getTemperature();
 }
-

@@ -31,20 +31,6 @@ vector<float> UtilityLibrary::fixAngles(vector<float> v){
 	return v;
 }
 
-float UtilityLibrary::getMeanValue(vector<float> v)
-{
-	if(v.empty()) {
-		return 0;
-	}
-	vector<float> fixedV = UtilityLibrary::fixAngles(v);
-	double sum = std::accumulate(fixedV.begin(), fixedV.end(), 0.0);
-	double mean = sum / fixedV.size();
-	if(mean < 0 ){
-		mean+=360;
-	}
-	return mean;
-}
-
 float UtilityLibrary::getMedianValue(std::vector<float> v) {
 	if(v.empty()) {
 		return 0;
@@ -72,6 +58,8 @@ float UtilityLibrary::getMedianValue(std::vector<float> v) {
 
 float UtilityLibrary::mean(std::vector<float> values)
 {
+	if (values.size() < 1) return 0;
+
 	float sum = 0;
 
 	for(std::vector<float>::iterator it = values.begin();
@@ -89,6 +77,8 @@ float UtilityLibrary::mean(std::vector<float> values)
  */
 float UtilityLibrary::meanOfAngles(std::vector<float> anglesInDegrees)
 {
+	if (anglesInDegrees.size() < 1) return 0;
+	 
 	std::vector<float> xx, yy;
 	float x, y;
 
