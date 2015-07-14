@@ -5,6 +5,7 @@
 #include <sstream>
 #include <wiringSerial.h>
 #include <iostream>
+#include <utility/Utility.h>
 
 CV7::CV7() {
 		m_bufferSize = 30;
@@ -116,30 +117,30 @@ void CV7::setUseMean(bool useMean) {
 float CV7::getDirection()
 {
 	if (m_useMean) {
-		return UtilityLibrary::meanOfAngles(m_windDirection);
+		return Utility::meanOfAngles(m_windDirection);
 	}
 	else {
-		return UtilityLibrary::getMedianValue(m_windDirection);
+		return Utility::getMedianValue(m_windDirection);
 	}
 }
 
 float CV7::getSpeed()
 {
 	if (m_useMean) {
-		return UtilityLibrary::mean(m_windSpeed);
+		return Utility::mean(m_windSpeed);
 	}
 	else {
-		return UtilityLibrary::getMedianValue(m_windSpeed);
+		return Utility::getMedianValue(m_windSpeed);
 	}
 }
 
 float CV7::getTemperature()
 {
 	if (m_useMean) {
-			return UtilityLibrary::mean(m_windTemperature);
+			return Utility::mean(m_windTemperature);
 	}
 	else {
-		return UtilityLibrary::getMedianValue(m_windTemperature);
+		return Utility::getMedianValue(m_windTemperature);
 	}
 }
 

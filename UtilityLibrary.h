@@ -14,17 +14,6 @@
 
 class UtilityLibrary {
 public:
-	static std::vector<float> fixAngles(std::vector<float> v);
-	static float getMedianValue(std::vector<float> v);
-	static float mean(std::vector<float> values);
-	static float meanOfAngles(std::vector<float> anglesInDegrees);
-	
-	/*
-	 * Converts an angle in degrees to cartesian coordinates (x,y) on the
-	 * unit circle
-	 */
-	static void polarToCartesian(float degrees, float& x, float& y);
-
 	static std::map<std::string,float> parseString(const char* buffer);
 };
 
