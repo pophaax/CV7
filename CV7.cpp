@@ -6,6 +6,8 @@
 #include <wiringSerial.h>
 #include <iostream>
 #include <utility/Utility.h>
+#include "UtilityLibrary.h"
+#include "models/WindsensorModel.h"
 
 CV7::CV7() {
 		m_bufferSize = 30;

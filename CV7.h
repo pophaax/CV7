@@ -5,8 +5,8 @@
 #include <vector>
 #include <map>
 #include "Windsensor.h"
-#include "UtilityLibrary.h"
-#include "models/WindsensorModel.h"
+
+class WindsensorModel;
 
 class CV7:public Windsensor {
 	

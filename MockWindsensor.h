@@ -9,8 +9,9 @@
 #define CV7_MOCKWINDSENSOR_H_
 
 #include "Windsensor.h"
-#include "models/WindsensorModel.h"
 #include <string>
+
+class WindsensorModel;
 
 class MockWindsensor:public Windsensor {
 	public:

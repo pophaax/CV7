@@ -7,10 +7,9 @@
 
 #ifndef CV7_UTILITYLIBRARY_H_
 #define CV7_UTILITYLIBRARY_H_
-#include <vector>
+
 #include <map>
 #include <string.h>
-#include <stdlib.h>
 
 class UtilityLibrary {
 public:

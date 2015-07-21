@@ -58,5 +58,3 @@ void MockWindsensor::setUseMean(bool useMean) {
 void MockWindsensor::getModel(WindsensorModel *model) {
 
 }
-
-
