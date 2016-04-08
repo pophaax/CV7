@@ -8,7 +8,7 @@
 #######################################################
 
 CC = g++
-FLAGS = -Wall -pedantic -Werror -std=c++14 -DBOOST_LOG_DYN_LINK
+FLAGS = -g -Wall -pedantic -Werror -std=c++14 -DBOOST_LOG_DYN_LINK
 LIBS = -lpthread -lwiringPi -lrt -I$(SAILINGROBOTS_HOME) -lboost_system -lboost_log -lboost_thread
 
 SOURCES_WIND = Windsensor.cpp
